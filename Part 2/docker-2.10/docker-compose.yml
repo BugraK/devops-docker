@@ -1,0 +1,43 @@
+version: '3.8'
+
+services:
+  nginx:
+    image: nginx:1.19-alpine
+    container_name: nginx
+    volumes:
+      - ./nginx.conf:/etc/nginx/nginx.conf:ro
+    ports:
+      - 80:80
+
+  db:
+    image: postgres:16.3-alpine3.20
+    restart: unless-stopped
+    container_name: db
+    environment:
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=hunter52
+      - POSTGRES_DB=postgres
+    volumes:
+      - ./database:/var/lib/postgresql/data
+
+  frontend:
+    container_name: frontend
+    build: ./example-frontend
+    environment:
+      - REACT_APP_BACKEND_URL=http://localhost/api
+
+  backend:
+    container_name: backend
+    build: ./example-backend
+    environment:
+      - REDIS_HOST=redis
+      - POSTGRES_HOST=db
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=hunter52
+      - POSTGRES_DB=postgres
+      - REQUEST_ORIGIN=http://localhost
+
+  redis:
+    image: redis
+    container_name: redis
+
