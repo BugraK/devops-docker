@@ -1,0 +1,12 @@
+FROM golang:1.16.15-alpine
+
+EXPOSE 8080
+
+WORKDIR /usr/src/app
+
+# Copy all of the source code
+COPY . .
+
+RUN go build
+
+CMD ["./server"]

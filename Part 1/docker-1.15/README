@@ -1,0 +1,16 @@
+The image is based on my simple landing page project. The repo is available at [GitHub](https://github.com/BugraK/landing-page).
+
+
+## Instructions
+
+First, download the image on your system.
+
+```
+docker pull bugrakib/landing-page
+```
+
+Then, run the image with port numbers. You can choose the ports you want using `-p` flag.
+
+```
+docker run -d -it -p 80:80 landing-page
+```
